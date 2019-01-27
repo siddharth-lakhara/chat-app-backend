@@ -9,6 +9,7 @@ const actionsLookUp = {
       return {
         success: true,
         msg: 'user added successfully',
+        userName,
       };
     }
     // user is already present
