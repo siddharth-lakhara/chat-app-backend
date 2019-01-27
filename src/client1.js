@@ -9,9 +9,17 @@ ws.on('open', () => {
     type: 'ADD_USERS',
     userName: 'siddharth',
   }));
+  setTimeout(() => ws.send(
+    JSON.stringify({
+      type: 'SEND_MSG',
+      from: 'siddharth',
+      to: 'user2',
+      data: 'some msg',
+    }),
+  ), 3000);
 });
 
 ws.on('message', (data) => {
-  console.log('rcvd message at client');
+  console.log('rcvd message at client siddharth');
   console.log(data);
 });

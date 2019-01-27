@@ -10,7 +10,7 @@ wss.on('connection', (ws) => {
     const msgObj = JSON.parse(msg);
     const { type, ...rest } = msgObj;
     const action = actionsLookUp[type];
-    const results = action(rest);
+    const results = action(rest, ws);
     console.log(results.msg);
 
     if (results.userName) {
@@ -20,7 +20,6 @@ wss.on('connection', (ws) => {
 
   ws.on('close', () => {
     console.log('disconnecting user', userName);
-    const index = usersList.indexOf(userName);
-    usersList.splice(index, 1);
+    delete usersList[userName];
   });
 });
