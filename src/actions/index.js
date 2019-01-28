@@ -4,7 +4,7 @@ const broadcast = require('./broadcast');
 
 const actionsLookUp = {
   ADD_USERS: (params, ws) => {
-    const { userName } = params;
+    const userName = params.userName.toLowerCase();
     if (!usersList.hasOwnProperty(userName)) {
       // add user
       usersList[userName] = ws;
