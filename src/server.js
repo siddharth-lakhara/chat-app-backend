@@ -9,12 +9,16 @@ wss.on('connection', (ws) => {
   ws.on('message', (msg) => {
     const msgObj = JSON.parse(msg);
     const { type, ...rest } = msgObj;
-    const action = actionsLookUp[type];
-    const results = action(rest, ws);
-    console.log(results.msg);
+    try {
+      const action = actionsLookUp[type];
+      const results = action(rest, ws);
+      console.log(results.msg);
 
-    if (results.userName) {
-      userName = results.userName;
+      if (results.userName) {
+        userName = results.userName;
+      }
+    } catch (e) {
+      console.log('invalid command: ', type);
     }
   });
 

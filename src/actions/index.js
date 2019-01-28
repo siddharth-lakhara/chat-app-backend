@@ -1,5 +1,6 @@
 const usersList = require('./usersList');
 const verifyUsers = require('./verifyUsers');
+const broadcast = require('./broadcast');
 
 const actionsLookUp = {
   ADD_USERS: (params, ws) => {
@@ -7,20 +8,33 @@ const actionsLookUp = {
     if (!usersList.hasOwnProperty(userName)) {
       // add user
       usersList[userName] = ws;
+      const updateUsersPayload = {
+        type: 'USERS_UPDATE',
+        usersList: Object.keys(usersList),
+      };
+      ws.send(JSON.stringify({
+        type: 'USER_LOGIN_SUCCESS',
+        userName,
+        msg: 'user added successfully',
+      }));
+      broadcast(JSON.stringify(updateUsersPayload));
       return {
-        success: true,
         msg: 'user added successfully',
         userName,
       };
     }
     // user is already present
+    ws.send(JSON.stringify({
+      type: 'USER_LOGIN_FAIL',
+      userName,
+      msg: 'username already taken',
+    }));
     return {
-      success: false,
       msg: 'username already taken',
     };
   },
 
-  SEND_MSG: (params, ws) => {
+  SEND_MSG: (params) => {
     const { from, to, data } = params;
     console.log(Object.keys(usersList));
     if (verifyUsers(from) && verifyUsers(to)) {

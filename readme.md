@@ -16,3 +16,12 @@ Functionalities:
   - send message
   - send success or failure message to sender
 
+
+Events at client:
+ - ADD_USERS
+ - USER_LOGIN_SUCCESS
+ - USER_LOGIN_FAIL
+ - USERS_UDPATE
+ - RCV_MSG
+ - SEND_MSG
+ - SEND_MSG_ACK
