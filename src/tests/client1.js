@@ -7,7 +7,7 @@ const ws = new WebSocket('ws://localhost:8080');
 ws.on('open', () => {
   ws.send(JSON.stringify({
     type: 'ADD_USERS',
-    userName: 'siddharth',
+    userName: 'swayam',
   }));
   setTimeout(() => ws.send(
     JSON.stringify({

@@ -1,6 +1,7 @@
 const WebSocket = require('ws');
 const actionsLookUp = require('./actions');
 const usersList = require('./actions/usersList');
+const broadcast = require('./actions/broadcast');
 
 const wss = new WebSocket.Server({ port: 8080 });
 
@@ -25,5 +26,9 @@ wss.on('connection', (ws) => {
   ws.on('close', () => {
     console.log('disconnecting user', userName);
     delete usersList[userName];
+    broadcast(JSON.stringify({
+      type: 'USERS_UPDATE',
+      usersList: Object.keys(usersList),
+    }));
   });
 });
